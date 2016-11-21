@@ -1,0 +1,64 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-21 15:34+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: setup.php:106
+msgctxt "physicalinv"
+msgid "Your GLPI version not compatible, require >= 9.1 and < 9.2"
+msgstr ""
+
+#: front/inventory.form.php:5 front/inventory.php:5 inc/inventory.class.php:25
+#: inc/inventory.class.php:73
+msgctxt "physicalinv"
+msgid "Physical inventory"
+msgstr ""
+
+#: front/inventory.form.php:17
+msgctxt "physicalinv"
+msgid "No device found with the number:"
+msgstr ""
+
+#: inc/inventory.class.php:79
+msgctxt "physicalinv"
+msgid "Search with the serial number or inventory number"
+msgstr ""
+
+#: inc/inventory.class.php:256
+msgctxt "physicalinv"
+msgid "Validate physical inventory"
+msgstr ""
+
+#: inc/inventory.class.php:288
+msgctxt "physicalinv"
+msgid "Information udpated"
+msgstr ""
+
+#: inc/inventory.class.php:289
+msgctxt "physicalinv"
+msgid "Physical inventry date updated"
+msgstr ""
+
+#: inc/inventory.class.php:316
+msgctxt "physicalinv"
+msgid "Multiple devices found, choose the right"
+msgstr ""
+
+#: inc/inventory.class.php:336
+msgctxt "physicalinv"
+msgid "Choose it"
+msgstr ""

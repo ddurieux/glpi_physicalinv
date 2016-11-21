@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+   <name>Physical inventory</name>
+   <key>physicalinv</key>
+   <state>stable</state>
+   <logo></logo>
+   <description>
+      <short>
+         <fr><![CDATA[Physical inventory est un plugin permettant de faire l'inventaire physique des équipements. Il permet de modifier certains champs de l'équipement et quant on valide, la date d'inventaire physique est modifiée automatiquement]]></fr>
+         <en><![CDATA[Physical inventory is a plugin permit do physical inventory of devices. The user can modifiy some fields of the device and when validate, the physical inventory date is updated automatically]]></en>
+      </short>
+      <long>
+   <fr>
+       Le plugin physical inventory permet de rechercher, modifier un équipement et modifier la date de dernier inventaire physique
+   </fr>
+   <en>
+       The plugin physical inventory permit to search, modify a device and modify the physical inventory date
+   </en>
+      </long>
+   </description>
+   <homepage>https://github.com/ddurieux/physicalinv</homepage>
+   <download>https://github.com/ddurieux/physicalinv/releases</download>
+   <issues>https://github.com/ddurieux/physicalinv/issues</issues>
+   <readme>https://github.com/ddurieux/physicalinv/master/README.asciidoc</readme>
+   <authors>
+      <author>David DURIEUX</author>
+      <author>DCS company</author>
+   </authors>
+   <versions>
+      <version>
+        <num>9.1+1.0</num>
+        <compatibility>9.1</compatibility>
+      </version>
+   </versions>
+   <langs>
+      <lang>fr_FR</lang>
+      <lang>en_GB</lang>
+   </langs>
+   <license>AGPLv3+</license>
+   <tags>
+         <fr>
+            <tag>inventaire</tag>
+            <tag>matériel</tag>
+            <tag>inventaire physique</tag>
+         </fr>
+         <en>
+            <tag>inventory</tag>
+            <tag>device</tag>
+            <tag>physical inventory</tag>
+         </en>
+   </tags>
+   <screenshots>
+      <screenshot></screenshot>
+   </screenshots>
+</root>

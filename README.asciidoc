@@ -1,0 +1,11 @@
+== Physical inventory Plugin
+
+This plugin permit to manage easily the physical inventory of devices:
+
+If you want to report bugs or check for development status, you can check http://.
+
+== Third-party icons and images
+
+Some icons used in the project comes from the following set of
+graphics licensed:
+

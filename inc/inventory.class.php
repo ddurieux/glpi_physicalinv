@@ -259,7 +259,7 @@ class PluginPhysicalinvInventory extends CommonGLPI {
       echo "<td rowspan='3'>".__('Comments')."</td>";
       echo "<td rowspan='3' class='middle'>";
 
-      echo "<textarea cols='45' rows='".($rowspan+3)."' name='comment' >".
+      echo "<textarea cols='45' rows='3' name='comment' >".
            $item->fields["comment"];
       echo "</textarea></td>";
       $model = $itemtype.'Model';
@@ -285,7 +285,7 @@ class PluginPhysicalinvInventory extends CommonGLPI {
       echo "<td>".__('Inventory number')."</td>";
       echo "<td>";
       $objectName = autoName($item->fields["otherserial"], "otherserial", False,
-                             $item->getType(), $this->fields["entities_id"]);
+                             $item->getType(), $item->fields["entities_id"]);
       Html::autocompletionTextField($item, 'otherserial', array('value' => $objectName));
       echo "</td></tr>\n";
 

@@ -47,6 +47,7 @@
  * @return boolean
  */
 function plugin_physicalinv_install() {
+   require_once(GLPI_ROOT . "/plugins/physicalinv/inc/profile.class.php");
    PluginPhysicalinvProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
    return TRUE;
 }
@@ -59,6 +60,8 @@ function plugin_physicalinv_install() {
  * @return boolean
  */
 function plugin_physicalinv_uninstall() {
+
+   require_once(GLPI_ROOT . "/plugins/physicalinv/inc/profile.class.php");
    PluginPhysicalinvProfile::uninstallProfile();
    PluginPhysicalinvProfile::removeRightsFromSession();
    return TRUE;

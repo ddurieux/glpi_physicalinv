@@ -11,10 +11,10 @@
       </short>
       <long>
    <fr>
-       Le plugin physical inventory permet de rechercher, modifier un équipement et modifier la date de dernier inventaire physique
+       Le plugin physical inventory permet de rechercher, modifier certains champs d'un équipement et modifier la date de dernier inventaire physique
    </fr>
    <en>
-       The plugin physical inventory permit to search, modify a device and modify the physical inventory date
+       The plugin physical inventory permit to search, modify some fields of a device and modify the physical inventory date
    </en>
       </long>
    </description>

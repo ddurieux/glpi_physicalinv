@@ -41,36 +41,33 @@
  *
  */
 
-include ("../../../inc/includes.php");
+class PhysicalinvInstallTest extends Common_TestCase {
 
-Session::checkRight('plugin_physicalinv_inventory', UPDATE);
 
-Html::header(__('Physical inventory', 'physicalinv'),
-             $_SERVER["PHP_SELF"],
-             "plugins",
-             "pluginphysicalinvinventory",
-             "inventory");
+   /**
+    * @depends GLPIInstallTest::installDatabase
+    */
+   public function testInstall() {
 
-$inventory = new PluginPhysicalinvInventory();
-if (isset($_POST['choose_device'])) {
-   $inventory->displayItemtypeInformation($_POST['id'], $_POST['itemtype']);
-} else if (isset($_POST["search_item"]) AND !empty($_POST['searchnumber'])) {
-   $ids = $inventory->searchItemWithNumber($_POST['searchnumber']);
-   if (count($ids) == 0) {
-      Session::addMessageAfterRedirect(__('No device found with the number:', 'physicalinv')." ".$_POST['searchnumber'], false, WARNING);
-      Html::back();
+      global $DB;
+      $DB->connect();
+      $this->assertTrue($DB->connected, "Problem connecting to the Database");
+
+      $output = array();
+      $returncode = 0;
+      exec(
+         "php -f ".PHYSICALINV_ROOT. "/scripts/cli_install.php -- --as-user 'glpi'",
+         $output, $returncode
+      );
+      $this->assertEquals(0,$returncode,
+         "Error when installing plugin in CLI mode\n".
+         implode("\n",$output)
+      );
+
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
    }
-   if (!$inventory->multipleDevices($ids)) {
-      foreach ($ids as $itemtype=>$theids) {
-         foreach ($theids as $id) {
-            $inventory->displayItemtypeInformation($id, $itemtype);
-         }
-      }
-   }
-} else if (isset($_POST['valid_inventory'])) {
-   $inventory->saveData($_POST);
-   Html::redirect($CFG_GLPI['root_doc']."/plugins/physicalinv/front/inventory.php");
-} else {
-   Html::back();
 }
-Html::footer();
+
+?>

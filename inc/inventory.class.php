@@ -383,4 +383,24 @@ class PluginPhysicalinvInventory extends CommonGLPI {
       echo "</table>";
       return True;
    }
+
+
+
+   /**
+    * Get additional menu options and breadcrumb
+    *
+    * @global array $CFG_GLPI
+    * @return array
+    */
+   static function getAdditionalMenuOptions() {
+      global $CFG_GLPI;
+
+      $options = array();
+
+      $options['inventory']['title'] = __('Physical inventory', 'physicalinv');
+      $options['inventory']['page']  = $CFG_GLPI['root_doc']."/plugins/physicalinv/front/inventory.php";
+
+      return $options;
+   }
+
 }

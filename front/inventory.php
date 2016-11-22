@@ -43,10 +43,12 @@
 
 include ("../../../inc/includes.php");
 
+Session::checkRight('plugin_physicalinv_inventory', UPDATE);
+
 Html::header(__('Physical inventory', 'physicalinv'),
              $_SERVER["PHP_SELF"],
              "plugins",
-             "pluginphysicalinv",
+             "pluginphysicalinvinventory",
              "inventory");
 
 $inventory = new PluginPhysicalinvInventory();

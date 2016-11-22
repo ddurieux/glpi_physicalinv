@@ -52,14 +52,21 @@ include_once(GLPI_ROOT."/inc/includes.php");
  * @global array $CFG_GLPI
  */
 function plugin_init_physicalinv() {
-   global $PLUGIN_HOOKS;
+   global $PLUGIN_HOOKS, $CFG_GLPI;
 
    $PLUGIN_HOOKS['csrf_compliant']['physicalinv'] = TRUE;
 
    $Plugin = new Plugin();
 
    if ($Plugin->isActivated('physicalinv')) { // check if plugin is active
-      $PLUGIN_HOOKS["menu_toadd"]['physicalinv'] = array('plugins' => 'PluginPhysicalinvInventory');
+
+      if (Session::haveRight('plugin_physicalinv_inventory', UPDATE)) {
+         $PLUGIN_HOOKS["menu_toadd"]['physicalinv']['plugins'] = 'PluginPhysicalinvInventory';
+      }
+
+      $Plugin->registerClass('PluginPhysicalinvProfile',
+              array('addtabon' => array('Profile')));
+
    }
 }
 

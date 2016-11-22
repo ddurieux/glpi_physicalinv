@@ -1,11 +1,11 @@
 == Physical inventory Plugin
 
-This plugin permit to manage easily the physical inventory of devices:
+This plugin permit to manage easily the physical inventory of devices.
 
-If you want to report bugs or check for development status, you can check http://.
+It offer a simple search page, enter the _serial number_ or the _inventory number_
+and it will display the form with some fields to manage (like location, status...).
+After you validate the physical inventory and these fields are updated and the 
+_physical inventry date_ update to today date.
 
-== Third-party icons and images
-
-Some icons used in the project comes from the following set of
-graphics licensed:
-
+If you want to report bugs or check for development status, you can check 
+https://github.com/ddurieux/glpi_physicalinv .

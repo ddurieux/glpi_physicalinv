@@ -41,7 +41,7 @@
  *
  */
 
-define ("PLUGIN_PHYSICALINV_VERSION", "9.1+1.0");
+define ("PLUGIN_PHYSICALINV_VERSION", "9.1+1.1");
 
 include_once(GLPI_ROOT."/inc/includes.php");
 
@@ -52,7 +52,7 @@ include_once(GLPI_ROOT."/inc/includes.php");
  * @global array $CFG_GLPI
  */
 function plugin_init_physicalinv() {
-   global $PLUGIN_HOOKS, $CFG_GLPI;
+   global $PLUGIN_HOOKS;
 
    $PLUGIN_HOOKS['csrf_compliant']['physicalinv'] = TRUE;
 

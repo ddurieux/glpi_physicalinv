@@ -28,8 +28,17 @@
    </authors>
    <versions>
       <version>
+        <num>9.1+1.1</num>
+        <compatibility>9.1</compatibility>
+      </version>
+      <version>
         <num>9.1+1.0</num>
         <compatibility>9.1</compatibility>
+      </version>
+      <version>
+        <num>0.90+1.1</num>
+        <compatibility>0.90.x</compatibility>
+        <compatibility>0.85.x</compatibility>
       </version>
       <version>
         <num>0.90+1.0</num>

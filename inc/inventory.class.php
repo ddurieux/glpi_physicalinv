@@ -123,7 +123,7 @@ class PluginPhysicalinvInventory extends CommonGLPI {
 
       echo "<tr>";
       echo "<td class='center' style='height: 80px;'>";
-      echo "<input type='text' name='searchnumber' value='' size='50' style='height: 40px;font-size: 20px;' />";
+      echo "<input type='text' name='searchnumber' value='' size='50' style='height: 40px;font-size: 20px;' autofocus />";
       echo "</td>";
       echo "</tr>";
 

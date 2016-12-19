@@ -6,8 +6,14 @@
    <logo></logo>
    <description>
       <short>
-         <fr><![CDATA[Physical inventory est un plugin permettant de faire l'inventaire physique des équipements. Il permet de modifier certains champs de l'équipement et quant on valide, la date d'inventaire physique est modifiée automatiquement]]></fr>
-         <en><![CDATA[Physical inventory is a plugin permit do physical inventory of devices. The user can modifiy some fields of the device and when validate, the physical inventory date is updated automatically]]></en>
+         <fr><![CDATA[Physical inventory est un plugin permettant de faire 
+         l'inventaire physique des équipements. Il permet de modifier 
+         certains champs de l'équipement et quant on valide, la date 
+         d'inventaire physique est modifiée automatiquement]]></fr>
+         <en><![CDATA[Physical inventory is a plugin permit do physical 
+         inventory of devices. The user can modifiy some fields of the 
+         device and when validate, the physical inventory date is 
+         updated automatically]]></en>
       </short>
       <long>
    <fr>
@@ -18,10 +24,10 @@
    </en>
       </long>
    </description>
-   <homepage>https://github.com/ddurieux/physicalinv</homepage>
-   <download>https://github.com/ddurieux/physicalinv/releases</download>
-   <issues>https://github.com/ddurieux/physicalinv/issues</issues>
-   <readme>https://github.com/ddurieux/physicalinv/master/README.asciidoc</readme>
+   <homepage>https://github.com/ddurieux/glpi_physicalinv</homepage>
+   <download>https://github.com/ddurieux/glpi_physicalinv/releases</download>
+   <issues>https://github.com/ddurieux/glpi_physicalinv/issues</issues>
+   <readme>https://github.com/ddurieux/glpi_physicalinv/master/README.asciidoc</readme>
    <authors>
       <author>David DURIEUX</author>
       <author>DCS company</author>

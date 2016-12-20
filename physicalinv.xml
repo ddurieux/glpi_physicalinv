@@ -70,6 +70,7 @@
          </en>
    </tags>
    <screenshots>
-      <screenshot></screenshot>
+      <screenshot>https://raw.githubusercontent.com/ddurieux/glpi_physicalinv/master/screenshots/step1.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/ddurieux/glpi_physicalinv/master/screenshots/step2.png</screenshot>
    </screenshots>
 </root>

@@ -3,7 +3,7 @@
    <name>Physical inventory</name>
    <key>physicalinv</key>
    <state>stable</state>
-   <logo></logo>
+   <logo>https://raw.githubusercontent.com/ddurieux/glpi_physicalinv/master/screenshots/logo.png</logo>
    <description>
       <short>
          <fr><![CDATA[Physical inventory est un plugin permettant de faire 

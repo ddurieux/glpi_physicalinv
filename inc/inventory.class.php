@@ -164,10 +164,10 @@ class PluginPhysicalinvInventory extends CommonGLPI {
          $table = getTableForItemType($itemtype);
          $item = new $itemtype();
 
-         if (FieldExists($table, 'serial')) {
+         if ($DB->fieldExists($table, 'serial')) {
             $where_fields[] = 'serial';
          }
-         if (FieldExists($table, 'otherserial')) {
+         if ($DB->fieldExists($table, 'otherserial')) {
             $where_fields[] = 'otherserial';
          }
          if (count($where_fields) == 0) {
@@ -183,12 +183,21 @@ class PluginPhysicalinvInventory extends CommonGLPI {
             $query .= " `$field`='$number'";
             $first = False;
          }
-         $query .= ") AND `is_deleted`='0' AND `is_template`='0'";
+         $query .= ")";
+         if ($DB->fieldExists($table, 'is_deleted')) { // only if dust bin enabled
+            $query .= " AND `is_deleted`='0'";
+         }
+         if ($DB->fieldExists($table, 'is_template')) { // only if templates are in use
+            $query .= " AND `is_template`='0'";
+         }
+
          $result = $DB->query($query);
-         while ($data = $DB->fetch_array($result)) {
-            if ($item->canEdit($data['id'])) {
-               $id_list[$itemtype][$data['id']] = $data['id'];
-            }
+         if ($DB->numrows($result)>0) {
+             while ($data = $DB->fetch_array($result)) {
+                if ($item->canEdit($data['id'])) {
+                   $id_list[$itemtype][$data['id']] = $data['id'];
+                }
+             }
          }
       }
       return $id_list;
@@ -202,7 +211,7 @@ class PluginPhysicalinvInventory extends CommonGLPI {
     * @param string $itemtype
     */
    function displayItemtypeInformation($id, $itemtype) {
-      global $CFG_GLPI;
+      global $DB,$CFG_GLPI;
 
       $item = new $itemtype();
       $item->getFromDB($id);
@@ -238,10 +247,21 @@ class PluginPhysicalinvInventory extends CommonGLPI {
       Location::dropdown(array('value'  => $item->fields["locations_id"],
                                'entity' => $item->fields["entities_id"]));
       echo "</td>";
-      echo "<td>".__('Type')."</td>";
-      echo "<td>";
-      ComputerType::dropdown(array('value' => $item->fields["computertypes_id"]));
-      echo "</td></tr>\n";
+
+
+
+      $model = $itemtype.'Type';
+      if ($DB->tableExists(getTableForItemType($model))) {
+         $fk = getForeignKeyFieldForTable(getTableForItemType($model));
+         echo "<td>";
+         echo __('Type');
+         echo "</td>";
+         echo "<td>";
+         $model::dropdown(array('value' => $item->fields[$fk]));
+         echo "</td>";
+      } else {
+         echo "<td colspan='2'></td>";
+      }
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('User')."</td>";
@@ -263,12 +283,13 @@ class PluginPhysicalinvInventory extends CommonGLPI {
            $item->fields["comment"];
       echo "</textarea></td>";
       $model = $itemtype.'Model';
-      if (TableExists(getTableForItemType($model))) {
+      if ($DB->tableExists(getTableForItemType($model))) {
+         $fk = getForeignKeyFieldForTable(getTableForItemType($model));
          echo "<td>";
          echo __('Model');
          echo "</td>";
          echo "<td>";
-         $model::dropdown(array('value' => $item->fields["computermodels_id"]));
+         $model::dropdown(array('value' => $item->fields[$fk]));
          echo "</td>";
       } else {
          echo "<td colspan='2'></td>";

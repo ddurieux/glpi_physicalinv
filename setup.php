@@ -104,8 +104,8 @@ function plugin_physicalinv_check_prerequisites() {
       $_SESSION['glpi_plugins'] = array();
    }
 
-   if (version_compare(GLPI_VERSION, '9.1', 'lt') || version_compare(GLPI_VERSION, '9.2', 'ge')) {
-      echo __('Your GLPI version not compatible, require >= 9.1 and < 9.2', 'physicalinv');
+   if (version_compare(GLPI_VERSION, '9.1', 'lt') || version_compare(GLPI_VERSION, '9.5', 'gt')) {
+      echo __('Your GLPI version not compatible, require >= 9.1 and =< 9.4', 'physicalinv');
       return FALSE;
    }
    return TRUE;

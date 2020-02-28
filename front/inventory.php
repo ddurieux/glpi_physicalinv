@@ -3,7 +3,7 @@
 /**
  * Physical inventory plugin
  *
- * Copyright (C) 2016-2016 by David Durieux & DCS company.
+ * Copyright (C) 20120 by David Durieux & DCS company.
  *
  * https://github.com/ddurieux/glpi_physicalinv
  *
@@ -34,7 +34,7 @@
  *
  * @package   Physical inventory
  * @author    David Durieux
- * @copyright Copyright (c) 2016-2016 David Durieux & DCS company
+ * @copyright Copyright (c) 2016-2020 David Durieux & DCS company
  * @license   AGPL License 3.0 or (at your option) any later version
  *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
  * @link      https://github.com/ddurieux/glpi_physicalinv

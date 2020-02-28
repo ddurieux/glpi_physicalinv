@@ -3,7 +3,7 @@
 /**
  * Physical inventory plugin
  *
- * Copyright (C) 2016-2016 by David Durieux & DCS company.
+ * Copyright (C) 2016-2020 by David Durieux & DCS company.
  *
  * https://github.com/ddurieux/glpi_physicalinv
  *
@@ -34,7 +34,7 @@
  *
  * @package   Physical inventory
  * @author    David Durieux
- * @copyright Copyright (c) 2016-2016 David Durieux & DCS company
+ * @copyright Copyright (c) 2016-2020 David Durieux & DCS company
  * @license   AGPL License 3.0 or (at your option) any later version
  *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
  * @link      https://github.com/ddurieux/glpi_physicalinv
@@ -156,36 +156,42 @@ class PluginPhysicalinvInventory extends CommonGLPI {
    function searchItemWithNumber($number) {
       global $DB, $CFG_GLPI;
 
-      $id_list = array();
+      $id_list = [];
 
       // search in inventory have serial number or inventory number
       foreach($CFG_GLPI["asset_types"] as $itemtype) {
-         $where_fields = array();
+         $where_fields = [];
          $table = getTableForItemType($itemtype);
          $item = new $itemtype();
 
-         if (FieldExists($table, 'serial')) {
+         if ($DB->FieldExists($table, 'serial')) {
             $where_fields[] = 'serial';
          }
-         if (FieldExists($table, 'otherserial')) {
+         if ($DB->FieldExists($table, 'otherserial')) {
             $where_fields[] = 'otherserial';
          }
          if (count($where_fields) == 0) {
             continue;
          }
-         $query = "SELECT *
-                   FROM `".$table."` WHERE (";
-         $first = True;
+         $query = [
+            'FROM'   => $table,
+            'WHERE'  => [
+               'is_deleted'  => 0,
+               'is_template' => 0,
+            ],
+            'ORDER'  => ['name']
+         ];
+
+         $whereOr = [];
          foreach ($where_fields as $field) {
-            if (!$first) {
-               $query .= " OR ";
-            }
-            $query .= " `$field`='$number'";
-            $first = False;
+            $whereOr[$field] = $number;
          }
-         $query .= ") AND `is_deleted`='0' AND `is_template`='0'";
-         $result = $DB->query($query);
-         while ($data = $DB->fetch_array($result)) {
+         if (count($whereOr) > 0) {
+            $query['WHERE'][] = ['OR' => $whereOr];
+         }
+
+         $iterator = $DB->request($query);
+         while ($data = $iterator->next()) {
             if ($item->canEdit($data['id'])) {
                $id_list[$itemtype][$data['id']] = $data['id'];
             }
@@ -202,7 +208,7 @@ class PluginPhysicalinvInventory extends CommonGLPI {
     * @param string $itemtype
     */
    function displayItemtypeInformation($id, $itemtype) {
-      global $CFG_GLPI;
+      global $CFG_GLPI, $DB;
 
       $item = new $itemtype();
       $item->getFromDB($id);
@@ -223,36 +229,36 @@ class PluginPhysicalinvInventory extends CommonGLPI {
       echo "<td>";
       $objectName = autoName($item->fields["name"], "name", False,
                              $item->getType(), $item->fields["entities_id"]);
-      Html::autocompletionTextField($item, 'name', array('value' => $objectName));
+      Html::autocompletionTextField($item, 'name', ['value' => $objectName]);
       echo "</td>";
       echo "<td>".__('Status')."</td>";
       echo "<td>";
-      State::dropdown(array('value'     => $item->fields["states_id"],
-                            'entity'    => $item->fields["entities_id"],
-                            'condition' => "`is_visible_computer`"));
+      State::dropdown(['value'     => $item->fields["states_id"],
+                       'entity'    => $item->fields["entities_id"],
+                       'condition' => "`is_visible_computer`"]);
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Location')."</td>";
       echo "<td>";
-      Location::dropdown(array('value'  => $item->fields["locations_id"],
-                               'entity' => $item->fields["entities_id"]));
+      Location::dropdown(['value'  => $item->fields["locations_id"],
+                          'entity' => $item->fields["entities_id"]]);
       echo "</td>";
       echo "<td>".__('Type')."</td>";
       echo "<td>";
-      ComputerType::dropdown(array('value' => $item->fields["computertypes_id"]));
+      ComputerType::dropdown(['value' => $item->fields["computertypes_id"]]);
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('User')."</td>";
       echo "<td>";
-      User::dropdown(array('value'  => $item->fields["users_id"],
-                           'entity' => $item->fields["entities_id"],
-                           'right'  => 'all'));
+      User::dropdown(['value'  => $item->fields["users_id"],
+                      'entity' => $item->fields["entities_id"],
+                      'right'  => 'all']);
       echo "</td>";
       echo "<td>".__('Manufacturer')."</td>";
       echo "<td>";
-      Manufacturer::dropdown(array('value' => $item->fields["manufacturers_id"]));
+      Manufacturer::dropdown(['value' => $item->fields["manufacturers_id"]]);
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
@@ -263,12 +269,12 @@ class PluginPhysicalinvInventory extends CommonGLPI {
            $item->fields["comment"];
       echo "</textarea></td>";
       $model = $itemtype.'Model';
-      if (TableExists(getTableForItemType($model))) {
+      if ($DB->TableExists(getTableForItemType($model))) {
          echo "<td>";
          echo __('Model');
          echo "</td>";
          echo "<td>";
-         $model::dropdown(array('value' => $item->fields["computermodels_id"]));
+         $model::dropdown(['value' => $item->fields["computermodels_id"]]);
          echo "</td>";
       } else {
          echo "<td colspan='2'></td>";
@@ -286,13 +292,13 @@ class PluginPhysicalinvInventory extends CommonGLPI {
       echo "<td>";
       $objectName = autoName($item->fields["otherserial"], "otherserial", False,
                              $item->getType(), $item->fields["entities_id"]);
-      Html::autocompletionTextField($item, 'otherserial', array('value' => $objectName));
+      Html::autocompletionTextField($item, 'otherserial', ['value' => $objectName]);
       echo "</td></tr>\n";
 
       echo "<tr>";
       echo "<td class='center' style='height: 60px;' colspan='4'>";
-      echo Html::hidden('itemtype', array('value' => $itemtype));
-      echo Html::hidden('id', array('value' => $id));
+      echo Html::hidden('itemtype', ['value' => $itemtype]);
+      echo Html::hidden('id', ['value' => $id]);
       echo "<input type='submit' name='valid_inventory' value=\"".
                __('Validate physical inventory', 'physicalinv')."\" class='submit' >";
       echo "</td>";
@@ -315,15 +321,15 @@ class PluginPhysicalinvInventory extends CommonGLPI {
       $infocom = new Infocom();
 
       if ($infocom->getFromDBforDevice($data['itemtype'], $data['id'])) {
-         $input = array('id'             => $infocom->fields['id'],
-                        'inventory_date' => date("Y-m-d H:i:s"));
+         $input = ['id'             => $infocom->fields['id'],
+                   'inventory_date' => date("Y-m-d H:i:s")];
          $infocom->update($input);
       } else {
-         $input = array(
+         $input = [
              'items_id'       => $data['id'],
              'itemtype'       => $data['itemtype'],
              'inventory_date' => date("Y-m-d H:i:s")
-         );
+         ];
          $infocom->add($input);
       }
       Session::addMessageAfterRedirect(__('Information udpated', 'physicalinv'), false, INFO);
@@ -371,8 +377,8 @@ class PluginPhysicalinvInventory extends CommonGLPI {
 
             echo "<form method='post' name='' id=''  action=\"".$CFG_GLPI['root_doc'] .
                "/plugins/physicalinv/front/inventory.form.php\">";
-            echo Html::hidden('itemtype', array('value' => $itemtype));
-            echo Html::hidden('id', array('value' => $id));
+            echo Html::hidden('itemtype', ['value' => $itemtype]);
+            echo Html::hidden('id', ['value' => $id]);
             echo "<input type='submit' name='choose_device' value=\"".
                      __('Choose it', 'physicalinv')."\" class='submit' >";
             Html::closeForm();
@@ -395,7 +401,7 @@ class PluginPhysicalinvInventory extends CommonGLPI {
    static function getAdditionalMenuOptions() {
       global $CFG_GLPI;
 
-      $options = array();
+      $options = [];
 
       $options['inventory']['title'] = __('Physical inventory', 'physicalinv');
       $options['inventory']['page']  = $CFG_GLPI['root_doc']."/plugins/physicalinv/front/inventory.php";

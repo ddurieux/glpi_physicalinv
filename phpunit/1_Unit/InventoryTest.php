@@ -3,7 +3,7 @@
 /**
  * Physical inventory plugin
  *
- * Copyright (C) 2016-2016 by David Durieux & DCS company.
+ * Copyright (C) 2016-2020 by David Durieux & DCS company.
  *
  * https://github.com/ddurieux/glpi_physicalinv
  *
@@ -34,7 +34,7 @@
  *
  * @package   Physical inventory
  * @author    David Durieux
- * @copyright Copyright (c) 2016-2016 David Durieux & DCS company
+ * @copyright Copyright (c) 2016-2020 David Durieux & DCS company
  * @license   AGPL License 3.0 or (at your option) any later version
  *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
  * @link      https://github.com/ddurieux/glpi_physicalinv
@@ -49,7 +49,7 @@ class InventoryTest extends RestoreDatabase_TestCase {
     */
    public function searchDeviceWithSerialNumber() {
       $auth = new Auth();
-      $auth->Login('glpi', 'glpi');
+      $auth->login('glpi', 'glpi');
       file_put_contents(GLPI_ROOT."/files/_log/php-errors.log", '');
 
       $pInventory = new PluginPhysicalinvInventory();
@@ -59,10 +59,10 @@ class InventoryTest extends RestoreDatabase_TestCase {
       $phone = new Phone();
       $GLPIlog = new GLPIlogs();
 
-      $input = array(
+      $input = [
           'name'        => 'not important',
           'entities_id' => 0,
-      );
+      ];
 
       // Add 1 computer with serial number xxxxx, and 1 with serial yyyyy
       $input['serial'] = 'xxxxx';
@@ -72,11 +72,11 @@ class InventoryTest extends RestoreDatabase_TestCase {
       $devices = $pInventory->searchItemWithNumber('xxxxx');
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
-      $ref = array(
-          'Computer' => array(
+      $ref = [
+          'Computer' => [
               '1' => '1'
-          )
-      );
+          ]
+      ];
       $this->assertEquals($ref, $devices);
 
       // Add 2 more computers with serial number xxxxx
@@ -86,13 +86,13 @@ class InventoryTest extends RestoreDatabase_TestCase {
       $devices = $pInventory->searchItemWithNumber('xxxxx');
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
-      $ref = array(
-          'Computer' => array(
+      $ref = [
+          'Computer' => [
               '1' => '1',
               '3' => '3',
               '4' => '4'
-          )
-      );
+          ]
+      ];
       $this->assertEquals($ref, $devices);
 
       // Add 1 more computers with serial number xxxx and 1 with xxxxxx
@@ -108,16 +108,16 @@ class InventoryTest extends RestoreDatabase_TestCase {
       $devices = $pInventory->searchItemWithNumber('xxxxx');
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
-      $ref = array(
-          'Computer' => array(
+      $ref = [
+          'Computer' => [
               '1' => '1',
               '3' => '3',
               '4' => '4'
-          ),
-          'Monitor' => array(
+          ],
+          'Monitor' => [
               '1' => '1'
-          )
-      );
+          ]
+      ];
       $this->assertEquals($ref, $devices);
 
       // Add networkequipment with serial xxxxx
@@ -126,19 +126,19 @@ class InventoryTest extends RestoreDatabase_TestCase {
       $devices = $pInventory->searchItemWithNumber('xxxxx');
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
-      $ref = array(
-          'Computer' => array(
+      $ref = [
+          'Computer' => [
               '1' => '1',
               '3' => '3',
               '4' => '4'
-          ),
-          'Monitor' => array(
+          ],
+          'Monitor' => [
               '1' => '1'
-          ),
-          'NetworkEquipment' => array(
+          ],
+          'NetworkEquipment' => [
               '1' => '1'
-          )
-      );
+          ]
+      ];
       $this->assertEquals($ref, $devices);
 
       // Add a phone with serial xxxxx and another with xxyy
@@ -149,22 +149,22 @@ class InventoryTest extends RestoreDatabase_TestCase {
       $devices = $pInventory->searchItemWithNumber('xxxxx');
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
-      $ref = array(
-          'Computer' => array(
+      $ref = [
+          'Computer' => [
               '1' => '1',
               '3' => '3',
               '4' => '4'
-          ),
-          'Monitor' => array(
+          ],
+          'Monitor' => [
               '1' => '1'
-          ),
-          'NetworkEquipment' => array(
+          ],
+          'NetworkEquipment' => [
               '1' => '1'
-          ),
-          'Phone' => array(
+          ],
+          'Phone' => [
               '1' => '1'
-          )
-      );
+          ]
+      ];
       $this->assertEquals($ref, $devices);
    }
 

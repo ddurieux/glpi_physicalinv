@@ -235,7 +235,7 @@ class PluginPhysicalinvInventory extends CommonGLPI {
       echo "<td>";
       State::dropdown(['value'     => $item->fields["states_id"],
                        'entity'    => $item->fields["entities_id"],
-                       'condition' => "`is_visible_computer`"]);
+                       'condition' => ['`is_visible_computer`', 1]]);
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
